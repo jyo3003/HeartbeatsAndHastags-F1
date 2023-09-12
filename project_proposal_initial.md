@@ -64,6 +64,7 @@ Here are three sources that provide background knowledge relevant to accomplishi
 These sources can serve as valuable references for gaining the necessary background knowledge and technical understanding to successfully carry out the sentiment analysis project during major sporting events.
 
 Related Work: 
+
     Title: "Twitter mood predicts the stock market"
     Authors: Johan Bollen, Huina Mao, Xiaojun Zeng
     Published in: Journal of Computational Science, 2011
