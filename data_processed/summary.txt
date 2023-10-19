@@ -1,0 +1,16 @@
+
+Summary Statistics for Quantitative Features:
+
+        user_followers  user_friends  user_favourites
+min                0.0           0.0              0.0
+max         24096107.0      310533.0        1248896.0
+median           440.0         493.0           3671.0
+
+
+Summary Statistics for Qualitative Features:
+
+      Feature    Number of Categories    Most Frequent Category         Least Frequent Category
+    user_name                  107646                  F1reader                   #KendallsArmy
+user_location                   32000            United Kingdom  estero, nord molto a nord 1972
+     hashtags                   50232                        F1                   8ThWorldTitle
+         date                     137                2021-12-12                      2022-04-20
