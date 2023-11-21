@@ -1,0 +1,12 @@
+Model: Random Forest
+Accuracy: 0.9116
+Precision: 0.9056
+Recall: 0.9116
+F1-score: 0.9057
+
+Model: Random Forest
+Accuracy: 0.9116
+Precision: 0.9056
+Recall: 0.9116
+F1-score: 0.9057
+
