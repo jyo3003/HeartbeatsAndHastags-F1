@@ -1,46 +1,67 @@
-# wf_ml_evaluation.py
-import pandas as pd
-from sklearn.metrics import accuracy_score, classification_report
 import joblib
+import pandas as pd
+from sklearn.metrics import accuracy_score, f1_score
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from xgboost import XGBClassifier
 import os
 
+
+
 def evaluate_model():
-    # Load the model
-    model = joblib.load('models/rf_model.joblib')
+    # In wf_ml_training.py
+    print("Executing wf_ml_eval.py")
 
-    # Load the test data and true labels
-    X_test = pd.read_csv('data_processed/X_test.csv')
-    y_test = pd.read_csv('data_processed/y_test.csv')
+    # File paths
+    DATA_PATH = 'data_processed/'
+    MODEL_PATH = 'models/'
+    EVAL_PATH = 'evaluation/'
 
-    # Make predictions using the model
-    predictions = model.predict(X_test)
+    # Create directories if they don't exist
+    os.makedirs(MODEL_PATH, exist_ok=True)
+    os.makedirs(EVAL_PATH, exist_ok=True)
 
-    # Evaluate the predictions
-    accuracy = accuracy_score(y_test, predictions)
-    report = classification_report(y_test, predictions, output_dict=True)
+    # Load training and test data
+    X_train = pd.read_csv(os.path.join(DATA_PATH, 'X_train.csv'))
+    y_train = pd.read_csv(os.path.join(DATA_PATH, 'y_train.csv')).values.ravel()
+    X_test = pd.read_csv(os.path.join(DATA_PATH, 'X_test.csv'))
+    y_test = pd.read_csv(os.path.join(DATA_PATH, 'y_test.csv')).values.ravel()
 
-    # Prepare the summary text
-    summary = (
-        f"Model: {'Random Forest'}\n"
-        f"Accuracy: {accuracy:.4f}\n"
-        f"Precision: {report['weighted avg']['precision']:.4f}\n"
-        f"Recall: {report['weighted avg']['recall']:.4f}\n"
-        f"F1-score: {report['weighted avg']['f1-score']:.4f}\n"
-    )
-    print(summary)
+    # Initialize models
+    rf_model = RandomForestClassifier()
+    logistic_model = LogisticRegression()
+    svm_model = SVC()
+    xgb_model = XGBClassifier()
 
-    # Ensure the evaluation directory exists before writing the report
-    evaluation_dir = 'evaluation'
-    if not os.path.exists(evaluation_dir):
-        os.makedirs(evaluation_dir)
+    # List of models
+    models = [
+        ('Random Forest', rf_model),
+        ('Logistic Regression', logistic_model),
+        ('SVM', svm_model),
+        ('XGBoost', xgb_model)
+    ]
 
-    # Save the summary to a text file
-    evaluation_report_path = os.path.join(evaluation_dir, 'summary.txt')
-    with open(evaluation_report_path, 'a') as f:
-        f.write(summary + "\n")
+    # Train and evaluate each model
+    for name, model in models:
+        try:
+            # Train model
+            model.fit(X_train, y_train)
 
-    # If additional models were evaluated, append their results to the summary file as well
-    # ...
+            # Make predictions
+            predictions = model.predict(X_test)
 
-if __name__ == "__main__":
-    evaluate_model()
+            # Evaluate model
+            accuracy = accuracy_score(y_test, predictions)
+            f1 = f1_score(y_test, predictions, average='weighted')
+
+            # Print the evaluation metrics
+            print(f"{name} Model - Accuracy: {accuracy:.4f}, F1-Score: {f1:.4f}")
+
+            # Append evaluation metrics to the summary file
+            with open(os.path.join(EVAL_PATH, 'summary.txt'), 'a') as file:
+                file.write(f"{name} Model - Accuracy: {accuracy:.4f}, F1-Score: {f1:.4f}\n")
+
+
+        except Exception as e:
+            print(f"Error in {name} model: {e}")

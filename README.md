@@ -12,4 +12,4 @@ And the link to dataset from the website(to check the MD5 Hash) - https://www.ka
 1. Download the dataset from one of the links above
 2. Place it in data_original folder
 3. Go to the directory ser594_23fc_project in your system and run python wf_core.py
-4. This will directly create all the necessary plots and correlations. 
+4. This will directly create all the necessary plots, correlations, visualisations, models, train, test data sets, summary. 

@@ -1,12 +1,4 @@
-Model: Random Forest
-Accuracy: 0.9116
-Precision: 0.9056
-Recall: 0.9116
-F1-score: 0.9057
-
-Model: Random Forest
-Accuracy: 0.9116
-Precision: 0.9056
-Recall: 0.9116
-F1-score: 0.9057
-
+Random Forest Model - Accuracy: 0.8896, F1-Score: 0.8735
+Logistic Regression Model - Accuracy: 0.8511, F1-Score: 0.7826
+SVM Model - Accuracy: 0.8511, F1-Score: 0.7826
+XGBoost Model - Accuracy: 0.8796, F1-Score: 0.8481
